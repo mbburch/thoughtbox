@@ -16,11 +16,8 @@ group :development, :test do
   gem 'capybara'
   gem 'launchy'
   gem 'simplecov', require: false
-  gem 'shoulda-matchers', '~> 3.0'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
-  gem 'better_errors'
-  gem 'binding_of_caller'
 end
 
 group :development do
