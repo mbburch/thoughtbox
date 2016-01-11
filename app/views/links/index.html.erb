@@ -21,12 +21,13 @@
   </div>
   <div>
     <% @links.each do |link| %>
+    <div class="link" data-id="<%= link.id %>">
       <h3><%= link.title %>: <a href="<%= link.url %>"><%= link.url %></a>
       <% if link.read  %>
         <button class="mark-unread">Mark As Unread</button>
       <% elsif !link.read %>
         <button class="mark-read">Mark As Read</button>
-      <% end %></h3>
+      <% end %></h3></div>
     <% end %>
   </div>
 </div>
