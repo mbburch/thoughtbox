@@ -2,16 +2,26 @@
   <h5><%= link_to "Log Out", logout_path, method: :delete %></h5>
 
   <%= render partial: "layouts/flash" %>
-  <h2>Submit a Link</h2>
-  <%= form_for :link do |f| %>
-  <div class="form-group">
-    <%= f.label :url, class: "control-label" %>
-    <%= f.text_field :url, class: "form-control" %>
+  <div>
+    <h2>Submit a Link</h2>
+    <%= form_for :link do |f| %>
+    <div class="form-group">
+      <%= f.label :url, class: "control-label" %>
+      <%= f.url_field :url, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.hidden_field :user_id, value: current_user.id %>
+    </div>
+    <div class="form-group">
+      <%= f.label :title, class: "control-label" %>
+      <%= f.password_field :title, class: "form-control" %>
+    </div>
+    <%= f.submit "Submit" %>
+    <% end %>
   </div>
-  <div class="form-group">
-    <%= f.label :title, class: "control-label" %>
-    <%= f.password_field :title, class: "form-control" %>
+  <div>
+    <% @links.each do |link| %>
+      <h3><%= link.title %>: <a href="<%= link.url %>"><%= link.url %></a></h3>
+    <% end %>
   </div>
-  <%= f.submit "Submit" %>
-  <% end %>
 </div>
