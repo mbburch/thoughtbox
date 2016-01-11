@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Authenticated user viewing links index" do
+feature "Authenticated user viewing links index", js: true do
 
   scenario "sees form to submit link" do
     User.create(email: "user@example.com",
@@ -41,7 +41,7 @@ feature "Authenticated user viewing links index" do
     expect(page).to have_content("Facebook")
   end
 
-  scenario "can mark link as read or unread" do
+  scenario "can mark link as read" do
     User.create(email: "user@example.com",
                                password: "password",
                                password_confirmation: "password")
@@ -65,10 +65,6 @@ feature "Authenticated user viewing links index" do
     page.first(".mark-read").click
 
     expect(Link.first.read).to eq(true)
-    byebug
-    page.first(".mark-unread").click
-
-    expect(Link.first.read).to eq(false)
   end
 
 end
