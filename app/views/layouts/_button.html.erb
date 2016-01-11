@@ -1,0 +1,5 @@
+<% if @link.read  %>
+  <button class="mark-unread">Mark As Unread</button>
+<% elsif !@link.read %>
+  <button class="mark-read">Mark As Read</button>
+<% end %>
