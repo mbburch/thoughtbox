@@ -1,0 +1,5 @@
+<% if current_user %>
+    <p><%= link_to "Log Out", logout_path, method: :delete %></p>
+<% else %>
+    <% redirect_to "/" %>
+<% end %>

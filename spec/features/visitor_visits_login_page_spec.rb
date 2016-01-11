@@ -13,6 +13,7 @@ feature "Visitor logging in" do
     click_button "Log In"
 
     expect(current_path).to eq("/links")
+    expect(page).to have_content("Log Out")
   end
 
   scenario "doesn't work with invalid information" do
