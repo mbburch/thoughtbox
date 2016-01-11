@@ -7,6 +7,7 @@ RSpec.describe "Links API", type: :request do
   let(:json) { JSON.parse(response.body) }
 
   context "updating a link" do
+
     it "can mark a link as read or unread" do
       put "/api/v1/links/#{link.id}.json", {link: {read: true}}
 
@@ -19,6 +20,13 @@ RSpec.describe "Links API", type: :request do
       expect(response).to have_http_status 204
       expect(Link.first.read).to eq false
       expect(Link.last.read).to eq false
+    end
+
+    it "can edit link info" do
+      put "/api/v1/links/#{link.id}", { link: {title: "Updated Title", url: "http://link.com"} }
+
+      expect(response).to have_http_status(204)
+      expect(Idea.first.title).to eq("Updated Title")
     end
   end
 end
