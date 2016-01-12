@@ -1,9 +1,32 @@
 $(document).ready(function() {
+  fetchLinks();
   listenForRead();
   listenForUnread();
   editTitle();
   editUrl();
 });
+
+function fetchLinks() {
+  $.ajax({
+    type: 'GET',
+    url: '/api/v1/links',
+    success: function(links) {
+      $.each(links, function(index, link) {
+        renderLink(link);
+      });
+    }
+  });
+}
+
+function renderLink(link) {
+  $('#all-links').prepend(
+    "<div class='link' data-id='" + link.id + "'>"
+    + "<h3><span contenteditable='true' class='title'>" + link.title + "</span>"
+    + ": <a contenteditable='true' class='url' href='" + link.url + "'>"
+    + link.url
+    + "</a></h3></div>"
+  );
+}
 
 function listenForRead() {
   $('.mark-read').click(function(event) {

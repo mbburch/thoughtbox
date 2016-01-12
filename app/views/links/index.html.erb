@@ -20,14 +20,6 @@
     <% end %>
   </div>
   <div id="all-links">
-    <% @links.each do |link| %>
-    <div class="link" data-id="<%= link.id %>">
-      <h3><span contenteditable="true" class="title"><%= link.title %></span>: <a contenteditable="true" class="url" href="<%= link.url %>"><%= link.url %></a>
-      <% if link.read  %>
-        <button class="mark-unread">Mark As Unread</button>
-      <% elsif !link.read %>
-        <button class="mark-read">Mark As Read</button>
-      <% end %></h3></div>
-    <% end %>
+
   </div>
 </div>
