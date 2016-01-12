@@ -22,13 +22,6 @@ RSpec.describe Link, type: :model do
     expect(@link).to_not be_valid
   end
 
-  it "cannot be created with no user" do
-    @link = Link.new(url: "http://google.com",
-                     title: "Google")
-    @link.save
-    expect(@link).to_not be_valid
-  end
-
   it "has a default read status of false" do
     @link.save
 

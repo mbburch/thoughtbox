@@ -11,8 +11,8 @@ class LinksController < ApplicationController
   end
 
   def create
-    link = Link.new(link_params)
-    if link.save
+    @link = Link.new(link_params)
+    if @link.save
       redirect_to links_path
     else
       flash[:notice] = link.errors.full_messages.join(", ")
@@ -22,16 +22,6 @@ class LinksController < ApplicationController
 
   def edit
     @link = Link.find(params[:id])
-  end
-
-  def update
-    link = Link.find(params[:id])
-    if link.update(link_params)
-      redirect_to links_path
-    else
-      flash[:notice] = link.errors.full_messages.join(", ")
-      redirect_to links_path
-    end
   end
 
   private

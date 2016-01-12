@@ -4,5 +4,4 @@ class Link < ActiveRecord::Base
   validates :url, url: true
   validates_format_of :url, :with => URI::regexp(%w(http https))
   validates :title, presence: true
-  validates :user_id, presence: true
 end

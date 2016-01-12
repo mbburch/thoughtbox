@@ -1,6 +1,10 @@
 class Api::V1::LinksController < ApplicationController
   respond_to :json
 
+  def index
+    respond_with current_user.links
+  end
+
   def update
     respond_with Link.update(params[:id], link_params)
   end
