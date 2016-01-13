@@ -1,7 +1,5 @@
 $(document).ready(function() {
   fetchLinks();
-  listenForRead();
-  listenForUnread();
   editTitle();
   editUrl();
 });
@@ -20,21 +18,35 @@ function fetchLinks() {
 
 function renderLink(link) {
   $('#all-links').prepend(
-    "<div class='link' data-id='" + link.id + "'>"
+    "<div class='link read-" + link.read + "' data-read='" + link.read + "'data-id='" + link.id + "'>"
     + "<h3><span contenteditable='true' class='title'>" + link.title + "</span>"
     + ": <a contenteditable='true' class='url' href='" + link.url + "'>"
     + link.url
-    + "</a></h3></div>"
+    + "</a>" + read(link) + "</h3></div>"
   );
+  listenForRead();
+  listenForUnread();
+}
+
+function read(link) {
+  if (link.read) {
+    return '<button class="mark-unread">Mark As Unread</button>';
+  } else if (!link.read) {
+    return '<button class="mark-read">Mark As Read</button>';
+  }
 }
 
 function listenForRead() {
   $('.mark-read').click(function(event) {
     event.preventDefault();
     var link = $(event.target).closest('.link');
+    var button = $(event.target).closest('button');
+    button.removeClass('mark-read');
+    button.addClass('mark-unread');
+    button.text('Mark As Unread');
+    link.removeClass('read-false');
+    link.addClass('read-true');
     updateLink(link, true);
-    link.addClass('read');
-    link.removeClass('unread');
   });
 }
 
@@ -42,18 +54,26 @@ function listenForUnread() {
   $('.mark-unread').click(function(event) {
     event.preventDefault();
     var link = $(event.target).closest('.link');
+    var button = $(event.target).closest('button');
+    button.removeClass('mark-unread');
+    button.addClass('mark-read');
+    button.text('Mark As Read');
+    link.removeClass('read-true');
+    link.addClass('read-false');
     updateLink(link, false);
-    link.addClass('unread');
-    link.removeClass('read');
   });
 }
 
 function updateLink(link, status) {
+  var linkParams = { link: { read: status } };
   $.ajax({
     type: "PUT",
     dataType: "json",
     url: "/api/v1/links/" + link.attr('data-id') + ".json",
-    data: { link: { read: status } },
+    data: linkParams,
+    success: function(){
+      link.attr('data-read', linkParams.link.read);
+    },
     error: function(xhr) {
       console.log(xhr.responseText);
     }
