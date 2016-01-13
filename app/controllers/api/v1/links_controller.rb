@@ -2,7 +2,11 @@ class Api::V1::LinksController < ApplicationController
   respond_to :json
 
   def index
-    respond_with current_user.links
+    if current_user
+      respond_with current_user.links
+    else
+      redirect_to root_path
+    end
   end
 
   def update

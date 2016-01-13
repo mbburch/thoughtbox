@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Links API", type: :request do
+RSpec.describe "Links API", type: :request, js: true do
   let!(:user) { User.create!(email: "mb@example.com", password: "password", password_confirmation: "password") }
   let!(:link) { Link.create!(title: "google", url: "http://www.google.com", user_id: user.id) }
   let!(:link2) { Link.create!(title: "facebook", url: "http://www.facebook.com", user_id: user.id) }
@@ -26,7 +26,7 @@ RSpec.describe "Links API", type: :request do
       put "/api/v1/links/#{link.id}", { link: {title: "Updated Title", url: "http://link.com"} }
 
       expect(response).to have_http_status(204)
-      expect(Idea.first.title).to eq("Updated Title")
+      expect(Link.first.title).to eq("Updated Title")
     end
   end
 end

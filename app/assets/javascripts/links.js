@@ -2,6 +2,11 @@ $(document).ready(function() {
   fetchLinks();
   editTitle();
   editUrl();
+  searchLinks();
+  showUnread();
+  showRead();
+  showAll();
+  alphaSort();
 });
 
 function fetchLinks() {
@@ -12,6 +17,9 @@ function fetchLinks() {
       $.each(links, function(index, link) {
         renderLink(link);
       });
+    },
+    error: function(xhr) {
+      console.log(xhr.responseText);
     }
   });
 }
@@ -133,5 +141,49 @@ function editUrl() {
         });
       }
     });
+  });
+}
+
+function searchLinks() {
+  $('#search').keyup(function(){
+    var searchFor = $('#search').val().toLowerCase();
+
+    $('.link').each(function(index, link) {
+      var title = $(link).find('.title').text().toLowerCase();
+      var body  = $(link).find('.url').text().toLowerCase();
+      var match = (title + body).indexOf(searchFor) !== -1;
+      $(link).toggle(match);
+    });
+  });
+}
+
+function showUnread() {
+  $('.view-unread').click(function(event) {
+    $('.read-true').hide();
+    $('.read-false').show();
+  });
+}
+
+function showRead() {
+  $('.view-read').click(function() {
+    $('.read-false').hide();
+    $('.read-true').show();
+  });
+}
+
+function showAll() {
+  $('.view-all').click(function() {
+    $('.read-false').show();
+    $('.read-true').show();
+  });
+}
+
+function alphaSort() {
+  $('.sort').click(function() {
+    var links = $('#all-links').children();
+    var sorted = links.sort(function(a, b) {
+      return $(a).find('.title').text().toLowerCase() > $(b).find('.title').text().toLowerCase();
+    });
+    $('#all-links').html(sorted);
   });
 }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Authenticated user viewing links index", js: true do
+RSpec.feature "Authenticated user viewing links index", type: :feature, js: true do
 
   scenario "sees form to submit link" do
     User.create(email: "user@example.com",
@@ -64,7 +64,7 @@ feature "Authenticated user viewing links index", js: true do
 
     page.first(".mark-read").click
 
-    expect(Link.first.read).to eq(true)
+    expect(Link.last.read).to eq(true)
   end
 
 end
